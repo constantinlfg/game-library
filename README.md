@@ -7,3 +7,7 @@
     > ```composer init```
 - Ajout de ```php-cs-fixer```
     > ```composer require friendsofphp/php-cs-fixer --dev```
+- Récupération de la base de données
+![bd](img/bd.jpg)
+- création de ```.mypdo.ini```
+    > ![ini](img/ini.jpg)
