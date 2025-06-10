@@ -30,9 +30,7 @@ class AppWebPage extends WebPage
         <h1>{$this->getTitle()}</h1>
     </div>
     <div class="content">
-        <div class="list">
-            {$this->getBody()}
-        </div>
+        {$this->getBody()}
     </div>
     <div class="footer">
         Denière modification : $last
