@@ -1,7 +1,9 @@
 <?php
 
 namespace Entity;
+
 use Database\MyPdo;
+use Entity\Exception\EntityNotFoundException;
 
 class Category
 {
@@ -27,6 +29,23 @@ class Category
     {
         $this->description = $description;
     }
+
+    public static function findById(int $id): Category
+    {
+        $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
+SELECT id, description
+FROM category
+WHERE id = :id
+SQL);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        $category = $stmt->fetchObject(Category::class);
+        if ($category === false) {
+            throw new EntityNotFoundException("ID de l'artiste non trouvé");
+        }
+        return $category;
+    }
+
 
 
 }
