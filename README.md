@@ -5,3 +5,5 @@
 ## Mise en place du projet
 - Initialisation de ```composer```
     > ```composer init```
+- Ajout de ```php-cs-fixer```
+    > ```composer require friendsofphp/php-cs-fixer --dev```
