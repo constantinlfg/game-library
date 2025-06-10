@@ -11,7 +11,7 @@ class CategoryCollection
      * Créer une instance de la clase Category pour chaque categorie de la bd
      * @return Category[]
      */
-    public static function findALl(): array
+    public static function findAll(): array
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
 SELECT id, description
