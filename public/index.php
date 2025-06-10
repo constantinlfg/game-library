@@ -13,6 +13,11 @@ foreach (genreCollection::findAll() as $i) {
 }
 $html->appendContent("</div>");
 
-
+$html->appendContent("<div class='categories'><h2>Catégories</h2>");
+foreach (CategoryCollection::findAll() as $y) {
+    $body = "<div class='a'><a href='./category.php?genreId={$y->getId()}'>".$html->escapeString("{$y->getDescription()}")."</a></div>\n";
+    $html->appendContent($body);
+}
+$html->appendContent("</div>");
 
 echo $html->toHTML();
