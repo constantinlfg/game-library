@@ -3,6 +3,8 @@
 declare(strict_types=1);
 namespace Entity;
 use Database\MyPdo;
+use Entity\Exception\EntityNotFoundException;
+
 class genre
 {
     private int $id;
@@ -31,7 +33,7 @@ class genre
     {
         $stmt = MyPDO::getInstance()->prepare(<<<'SQL'
                                                 SELECT id, description
-                                                FROM   artist
+                                                FROM   genre
                                                 WHERE id = :genreId
                                                 SQL);
         $stmt->execute([':genreId' => $id]);
