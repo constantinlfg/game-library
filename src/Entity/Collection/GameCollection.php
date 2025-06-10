@@ -6,7 +6,7 @@ use Entity\Game;
 
 class GameCollection
 {
-    public function findByCategoryId(int $categoryId): array
+    public static function findByCategoryId(int $categoryId): array
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
 SELECT id, name, releaseYear, shortDescription, price, windows, linux, mac, metacritic, developerId, posterId
@@ -21,7 +21,7 @@ SQL);
         return $stmt->fetchALl();
     }
 
-    public function findByGenreId(int $genreId): array
+    public static function findByGenreId(int $genreId): array
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
 SELECT id, name, releaseYear, shortDescription, price, windows, linux, mac, metacritic, developerId, posterId
