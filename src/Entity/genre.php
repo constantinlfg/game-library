@@ -1,7 +1,9 @@
 <?php
 
 declare(strict_types=1);
+
 namespace Entity;
+
 use Database\MyPdo;
 use Entity\Exception\EntityNotFoundException;
 
@@ -38,10 +40,9 @@ class genre
                                                 SQL);
         $stmt->execute([':genreId' => $id]);
         $genre = $stmt->fetchObject(genre::class);
-        if ($genre === false){
+        if ($genre === false) {
             throw new EntityNotFoundException("ID du jeu non trouvé");
-        }
-        else {
+        } else {
             return $genre;
         }
     }
