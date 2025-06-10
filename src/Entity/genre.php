@@ -1,0 +1,46 @@
+<?php
+
+declare(strict_types=1);
+namespace Entity;
+use Database\MyPdo;
+class genre
+{
+    private int $id;
+    private string $description;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+    public static function findById(int $id): genre
+    {
+        $stmt = MyPDO::getInstance()->prepare(<<<'SQL'
+                                                SELECT id, description
+                                                FROM   artist
+                                                WHERE id = :genreId
+                                                SQL);
+        $stmt->execute([':genreId' => $id]);
+        $genre = $stmt->fetchObject(genre::class);
+        if ($genre === false){
+            throw new EntityNotFoundException("ID du jeu non trouvé");
+        }
+        else {
+            return $genre;
+        }
+    }
+}
