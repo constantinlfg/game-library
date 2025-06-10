@@ -9,11 +9,11 @@ class genreCollection
      * Créer une instance de la clase Category pour chaque categorie de la bd
      * @return genre[]
      */
-    public static function findALl(): array
+    public static function findAll(): array
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
 SELECT id, description
-FROM category
+FROM genre
 ORDER BY description
 SQL);
         $stmt->execute();
