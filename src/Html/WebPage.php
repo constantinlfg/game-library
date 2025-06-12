@@ -3,7 +3,9 @@
 declare(strict_types=1);
 
 namespace Html;
+
 use StringEscaper;
+
 class WebPage
 {
     use StringEscaper;
@@ -59,7 +61,7 @@ HTML;
         $this->appendToHead($html);
     }
 
-    public function escapeString(string $string):string
+    public function escapeString(string $string): string
     {
         /** @noinspection PhpStrictTypeCheckingInspection */
         return $this->stringEscaper($string);
