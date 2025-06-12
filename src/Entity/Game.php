@@ -2,6 +2,11 @@
 
 namespace Entity;
 
+use Database\MyPdo;
+use Entity\Exception\EntityNotFoundException;
+use Entity\genre;
+
+
 class Game
 {
     private int $id;
@@ -96,7 +101,7 @@ class Game
         $this->mac = $mac;
     }
 
-    public function getMetacritic(): int
+    public function getMetacritic(): ?int
     {
         return $this->metacritic;
     }
@@ -126,5 +131,48 @@ class Game
         $this->posterId = $posterId;
     }
 
+    public static function findById(int $id):Game{
+        $stmt=MyPdo::getInstance()->prepare(<<<'SQL'
+SELECT *
+FROM game
+WHERE id = :id
+SQL);
+        $stmt->bindParam(':id',$id);
+        $stmt->execute();
+        $game = $stmt->fetchObject(Game::class);
+        if ($game === false){
+            throw new EntityNotFoundException("ID du jeu non trouvé");
+        }
+        return $game;
+    }
 
+    public function findGenres(): array
+    {
+        $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
+SELECT id, description
+FROM game_genre, genre
+WHERE gameId = :gameId
+AND genreId = id
+SQL);
+        $gameId = $this->getId();
+        $stmt->bindParam(':gameId', $gameId);
+        $stmt->execute();
+        $stmt->setFetchMode(MyPdo::FETCH_CLASS, genre::class);
+        return $stmt->fetchAll();
+    }
+
+    public function findCategory(): array
+    {
+        $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
+SELECT id, description
+FROM game_category, category
+WHERE gameId = :gameId
+AND categoryId = id
+SQL);
+        $gameId = $this->getId();
+        $stmt->bindParam(':gameId', $gameId);
+        $stmt->execute();
+        $stmt->setFetchMode(MyPdo::FETCH_CLASS, Category::class);
+        return $stmt->fetchAll();
+    }
 }
