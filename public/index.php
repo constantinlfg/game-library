@@ -6,7 +6,7 @@ use Entity\Collection\CategoryCollection;
 
 $html = new AppWebPage('Jeux Vidéo');
 
-$html->appendContent("<div class='genres'><h2>Genres</h2>");
+$html->appendContent("<div class='content'> <div class='genres'><h2>Genres</h2>");
 foreach (genreCollection::findAll() as $i) {
     $body = <<<HTML
 <div class='a'>
@@ -26,6 +26,6 @@ foreach (CategoryCollection::findAll() as $y) {
 HTML;
     $html->appendContent($body);
 }
-$html->appendContent("</div>");
+$html->appendContent("</div></div>");
 
 echo $html->toHTML();
