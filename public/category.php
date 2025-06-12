@@ -15,23 +15,46 @@ try {
     $category = Category::findById($categoryId);
     $nom = (new AppWebPage())->escapeString($category->getDescription());
     $html = new AppWebPage("Jeux Vidéo : $nom");
-    $jeux = GameCollection::findByCategoryId(intval($categoryId));
     $html->appendContent('<div class="main">');
+    $jeux = GameCollection::findByCategoryId(intval($categoryId));
+
+
+    $reverse = -1;
     foreach ($jeux as $i) {
-        $content = <<<HTML
-<div class="gameBox">
-  <a href="game.php/?gameId={$i->getId()}" class="game" style="text-decoration:none">
-    <img src="poster.php?posterId={$i->getPosterId()}">
-    <div class="nomDesc">
-      {$i->getName()} ({$i->getReleaseYear()})<p></p>
-      {$i->getShortDescription()}
-    </div>
-  </a>
-</div>
-HTML;
-        $html->appendContent($content);
+        $reverse += 1;
+
+        if ($reverse % 2 == 0) {
+            $content = <<<HTML
+        <div class="gameBox">
+          <div class="image"><a href="game.php/?gameId={$i->getId()}" class="game" style="text-decoration:none">
+            <img src="poster.php?posterId={$i->getPosterId()}"></a></div>
+          <div class="nomDesc">
+              {$i->getName()} ({$i->getReleaseYear()})<p></p>
+              {$i->getShortDescription()}
+          </div>
+          
+        </div>
+        HTML;
+            $html->appendContent($content);
+        }
+
+        if ($reverse % 2 == 1) {
+            $content = <<<HTML
+        <div class="gameBox_rev">
+          <div class="image"><a href="game.php/?gameId={$i->getId()}" class="game" style="text-decoration:none">
+            <img src="poster.php?posterId={$i->getPosterId()}"></a></div>
+          <div class="nomDesc">
+              {$i->getName()} ({$i->getReleaseYear()})<p></p>
+              {$i->getShortDescription()}
+          </div>
+          
+        </div>
+        HTML;
+            $html->appendContent($content);
+        }
     }
     $html->appendContent('</div>');
+
     echo $html->toHtml();
 
 
