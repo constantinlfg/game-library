@@ -1,7 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Entity;
+
 use Database\MyPdo;
 use Entity\Exception\EntityNotFoundException;
 
@@ -28,10 +30,9 @@ class poster
                                                 SQL);
         $stmt->execute([':posterId' => $id]);
         $poster = $stmt->fetchObject(poster::class);
-        if ($poster === false){
+        if ($poster === false) {
             throw new EntityNotFoundException("ID du jeu non trouvé");
-        }
-        else {
+        } else {
             return $poster;
         }
     }
