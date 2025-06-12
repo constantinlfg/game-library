@@ -41,7 +41,7 @@ class genre
         $stmt->execute([':genreId' => $id]);
         $genre = $stmt->fetchObject(genre::class);
         if ($genre === false) {
-            throw new EntityNotFoundException("ID du jeu non trouvé");
+            throw new EntityNotFoundException("ID du genre non trouvé");
         } else {
             return $genre;
         }
