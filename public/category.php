@@ -10,7 +10,7 @@ use Entity\Category;
 $categoryId = $_GET['categoryId'];
 try {
     if (!(isset($categoryId)) && !(is_numeric($categoryId))) {
-        throw new ParameterException('id du genre invalide');
+        throw new ParameterException('id de la catégorie invalide');
     }
     $category = Category::findById($categoryId);
     $nom = (new AppWebPage())->escapeString($category->getDescription());

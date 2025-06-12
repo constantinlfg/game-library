@@ -129,7 +129,7 @@ class Game
         $this->posterId = $posterId;
     }
 
-    public function findById(int $id):Game{
+    public static function findById(int $id):Game{
         $stmt=MyPdo::getInstance()->prepare(<<<'SQL'
 SELECT *
 FROM game
