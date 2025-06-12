@@ -16,6 +16,7 @@ try {
     $nom = (new AppWebPage())->escapeString($category->getDescription());
     $html = new AppWebPage("Jeux Vidéo : $nom");
     $jeux = GameCollection::findByCategoryId(intval($categoryId));
+    $html->appendContent('<div class="main">');
     foreach ($jeux as $i) {
         $content = <<<HTML
 <div class="gameBox">
@@ -30,6 +31,7 @@ try {
 HTML;
         $html->appendContent($content);
     }
+    $html->appendContent('</div>');
     echo $html->toHtml();
 
 

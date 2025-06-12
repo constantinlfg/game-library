@@ -14,6 +14,7 @@ try {
     $genre = genre::findById($genreId);
     $nom = (new AppWebPage())->escapeString($genre->getDescription());
     $html = new AppWebPage("Jeux Vidéo : $nom");
+    $html->appendContent('<div class="main">');
     $jeux = GameCollection::findByGenreId(intval($genreId));
     foreach ($jeux as $i) {
         $content = <<<HTML
@@ -29,6 +30,7 @@ try {
 HTML;
         $html->appendContent($content);
     }
+    $html->appendContent('</div>');
     echo $html->toHtml();
 
 
