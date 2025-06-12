@@ -26,7 +26,7 @@ try {
         if ($reverse % 2 == 0) {
             $content = <<<HTML
         <div class="gameBox">
-          <div class="image"><a href="game.php/?gameId={$i->getId()}" class="game" style="text-decoration:none">
+          <div class="image"><a href="game.php?gameId={$i->getId()}" class="game" style="text-decoration:none">
             <img src="poster.php?posterId={$i->getPosterId()}"></a></div>
           <div class="nomDesc">
               {$i->getName()} ({$i->getReleaseYear()})<p></p>
@@ -41,7 +41,7 @@ try {
         if ($reverse % 2 == 1) {
             $content = <<<HTML
         <div class="gameBox_rev">
-          <div class="image"><a href="game.php/?gameId={$i->getId()}" class="game" style="text-decoration:none">
+          <div class="image"><a href="game.php?gameId={$i->getId()}" class="game" style="text-decoration:none">
             <img src="poster.php?posterId={$i->getPosterId()}"></a></div>
           <div class="nomDesc">
               {$i->getName()} ({$i->getReleaseYear()})<p></p>
