@@ -7,14 +7,14 @@ class Game
     private int $id;
     private string $name;
     private int $releaseYear;
-    private string $shortDescription;
-    private int $price;
-    private int $windows;
-    private int $linux;
-    private int $mac;
-    private int $metacritic;
-    private int $developerId;
-    private int $posterId;
+    private ?string $shortDescription;
+    private ?int $price;
+    private ?int $windows;
+    private ?int $linux;
+    private ?int $mac;
+    private ?int $metacritic;
+    private ?int $developerId;
+    private ?int $posterId;
 
     public function getId(): int
     {
