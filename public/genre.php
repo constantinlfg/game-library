@@ -14,7 +14,20 @@ try {
     $genre = genre::findById($genreId);
     $nom = (new AppWebPage())->escapeString($genre->getDescription());
     $html = new AppWebPage("Jeux Vidéo : $nom");
-    $jeux = GameCollection::findByGenreId($genreId);
+    $jeux = GameCollection::findByGenreId(intval($genreId));
+    foreach ($jeux as $i) {
+        $content = <<<HTML
+<div class="gameBox">
+  <a href="game.php/?gameId={$i->getId()}" class="game">
+    <img src="poster.php?posterId={$i->getPosterId()}">
+    {$i->getName()} <p></p>
+    {$i->getShortDescription()}
+  </a>
+</div>
+HTML;
+        $html->appendContent($content);
+    }
+    echo $html->toHtml();
 
 
 } catch (ParameterException) {
