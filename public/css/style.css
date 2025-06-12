@@ -1,0 +1,15 @@
+body{
+    display: flex;
+    height : 100%;
+    flex-direction: column;
+    border: 1px solid
+}
+.header{
+    align-items: center;
+    border: 1px solid
+}
+
+.content,.header{
+    flex-direction: row;
+    border: 1px solid
+}
