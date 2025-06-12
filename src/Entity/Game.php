@@ -2,6 +2,9 @@
 
 namespace Entity;
 
+use Database\MyPdo;
+use Entity\Exception\EntityNotFoundException;
+
 class Game
 {
     private int $id;
@@ -126,5 +129,19 @@ class Game
         $this->posterId = $posterId;
     }
 
+    public function findById(int $id):Game{
+        $stmt=MyPdo::getInstance()->prepare(<<<'SQL'
+SELECT *
+FROM game
+WHERE id = :id
+SQL);
+        $stmt->bindParam(':id',$id);
+        $stmt->execute();
+        $developer = $stmt->fetchObject(developer::class);
+        if ($developer === false){
+            throw new EntityNotFoundException("ID du jeu non trouvé");
+        }
+        return $developer;
+    }
 
 }
