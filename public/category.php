@@ -19,7 +19,7 @@ try {
     foreach ($jeux as $i) {
         $content = <<<HTML
 <div class="gameBox">
-  <a href="game.php/?gameId={$i->getId()}" class="game">
+  <a href="game.php/?gameId={$i->getId()}" class="game" style="text-decoration:none">
     <img src="poster.php?posterId={$i->getPosterId()}">
     {$i->getName()} <p></p>
     {$i->getShortDescription()}
