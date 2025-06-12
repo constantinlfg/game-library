@@ -31,7 +31,7 @@ class poster
         $stmt->execute([':posterId' => $id]);
         $poster = $stmt->fetchObject(poster::class);
         if ($poster === false) {
-            throw new EntityNotFoundException("ID du jeu non trouvé");
+            throw new EntityNotFoundException("ID du poster non trouvé");
         } else {
             return $poster;
         }
