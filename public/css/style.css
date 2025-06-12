@@ -120,6 +120,9 @@ body{
     justify-content: space-between;
     width: 100%;
 }
+.osDetails svg{
+    width: 30px;
+}
 
 .yearDetails{
     border-style: solid;
