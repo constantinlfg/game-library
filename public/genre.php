@@ -21,7 +21,7 @@ try {
   <a href="game.php/?gameId={$i->getId()}" class="game" style="text-decoration:none">
     <img src="poster.php?posterId={$i->getPosterId()}">
     <div class="nomDesc">
-      {$i->getName()} <p></p>
+      {$i->getName()} {$i->getReleaseYear()} <p></p>
       {$i->getShortDescription()}
     </div>
   </a>
