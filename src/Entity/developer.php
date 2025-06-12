@@ -38,7 +38,7 @@ class developer
         $stmt->execute([':developerId' => $id]);
         $developer = $stmt->fetchObject(developer::class);
         if ($developer === false){
-            throw new EntityNotFoundException("ID du jeu non trouvé");
+            throw new EntityNotFoundException("ID du dev non trouvé");
         }
         else {
             return $developer;

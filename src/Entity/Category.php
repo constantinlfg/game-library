@@ -40,8 +40,8 @@ SQL);
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         $category = $stmt->fetchObject(Category::class);
-        if ($category === false) {
-            throw new EntityNotFoundException("ID de l'artiste non trouvé");
+        if($category === false) {
+            throw new EntityNotFoundException("ID de la catégorie non trouvé");
         }
         return $category;
     }
