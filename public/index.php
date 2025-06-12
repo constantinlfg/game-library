@@ -9,7 +9,9 @@ $html = new AppWebPage('Jeux Vidéo');
 $html->appendContent("<div class='genres'><h2>Genres</h2>");
 foreach (genreCollection::findAll() as $i) {
     $body = <<<HTML
-<div class='a'><a style="text-decoration:none" href='genre.php?genreId={$i->getId()}'>{$html->escapeString("{$i->getDescription()}")}</a></div>
+<div class='a'>
+  <a style="text-decoration:none" href='genre.php?genreId={$i->getId()}'>{$html->escapeString("{$i->getDescription()}")}</a>
+</div>
 HTML;
     $html->appendContent($body);
 }
