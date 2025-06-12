@@ -5,6 +5,7 @@ use Entity\Exception\EntityNotFoundException;
 use Html\AppWebPage;
 use Entity\Exception\ParameterException;
 use Entity\genre;
+use Entity\developer;
 
 $gameId = $_GET['gameId'];
 try {
@@ -15,6 +16,9 @@ try {
     $nom = (new AppWebPage())->escapeString($game->getName());
     $html = new AppWebPage("Jeux Vidéo : $nom");
     $html->appendContent('<div class="main">');
+    $developer = developer::findById($game->getDeveloperId());
+    $price = $game->getPrice();
+    $price = $price/100;
     $content = <<<HTML
 <div class="detailJeu">
   <div class="details">
@@ -23,6 +27,9 @@ try {
       <div class="osDetails">os</div>
       <div class="yearDetails">Année de publication : {$game->getReleaseYear()}</div>
     </div>
+    <div class="devDetails">
+      Développeur : {$developer->getName()}
+    </div>
   </div>
   <div class="descriptionDetails">
     <div class="note&prixDetails">
@@ -30,10 +37,10 @@ try {
         Note Metacritic : {$game->getMetacritic()}
       </div>
       <div class="prixDetails">
-        {$game->getPrice()}
+        Prix : $price €
       </div>
     </div>
-    <div class="descriptionDetails">
+    <div class="description">
       {$game->getShortDescription()}
     </div>
   </div>
@@ -59,7 +66,7 @@ HTML;
     }
 
     $html->appendContent($content);
-    $html->appendContent('</div>');
+    $html->appendContent('</div></div></div>');
     echo $html->toHtml();
 
 
