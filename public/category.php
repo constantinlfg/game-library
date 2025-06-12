@@ -21,8 +21,10 @@ try {
 <div class="gameBox">
   <a href="game.php/?gameId={$i->getId()}" class="game" style="text-decoration:none">
     <img src="poster.php?posterId={$i->getPosterId()}">
-    {$i->getName()} <p></p>
-    {$i->getShortDescription()}
+    <div class="nomDesc">
+      {$i->getName()} ({$i->getReleaseYear()})<p></p>
+      {$i->getShortDescription()}
+    </div>
   </a>
 </div>
 HTML;
