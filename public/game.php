@@ -18,7 +18,7 @@ try {
     $content = <<<HTML
 <div class="detailJeu">
   <div class="details">
-    <div class="posterDetails"><img src="poster.php?"></div>
+    <div class="posterDetails"><img src="poster.php?posterId={$game->getPosterId()}"></div>
     <div class="os&yearDetails">
       <div class="osDetails">os</div>
       <div class="yearDetails">Année de publication : {$game->getReleaseYear()}</div>
