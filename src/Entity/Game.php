@@ -137,11 +137,11 @@ WHERE id = :id
 SQL);
         $stmt->bindParam(':id',$id);
         $stmt->execute();
-        $developer = $stmt->fetchObject(developer::class);
-        if ($developer === false){
+        $game = $stmt->fetchObject(developer::class);
+        if ($game === false){
             throw new EntityNotFoundException("ID du jeu non trouvé");
         }
-        return $developer;
+        return $game;
     }
 
 }
