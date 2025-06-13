@@ -106,6 +106,8 @@ Gère les erreurs courantes :
 
 - Lance une exception ParameterException si l'ID est invalide
 
+#### Recherche du Jeu en Base de Données
+
 ![game2](img/game2.png)
 
 - Cherche le jeu correspondant avec Game::findById().
@@ -113,6 +115,8 @@ Gère les erreurs courantes :
 - Évite les failles XSS en nettoyant le nom avec escapeString().
 
 - Crée une page web personnalisée avec le nom du jeu.
+
+#### Création du Menu
 
 ![game3](img/game3.png)
 
@@ -124,17 +128,23 @@ Affiche trois options :
 
 - Supprimer le jeu via game-delete.php.
 
+#### Informations du Jeu
+
 ![game4](img/game4.png)
 
 - Cherche le développeur associé au jeu.
 
 - Convertit le prix (stocké en centimes) en euros.
 
+#### Affichage des Systèmes d'Exploitation
+
 ![game5](img/game5.png)
 
 - Vérifie si le jeu est compatible avec Windows, Linux ou Mac.
 
 - Affiche des icônes correspondantes
+
+#### Détails du Jeu
 
 ![game6](img/game6.png)
 
@@ -148,15 +158,21 @@ Affiche:
 
 - Systèmes compatibles.
 
+#### Note Metacritic et Prix
+
 ![game7](img/game7.png)
 
 - Affiche la note Metacritic.
 
 - Affiche le prix du jeu.
 
+#### Ajout des Genres et Catégories
+
 ![game8](img/game8.png)
 
 - Ajoute les liens vers les genres et catégories du jeu
+
+#### Gestion des Erreurs
 
 ![game9](img/game9.png)
 
@@ -167,3 +183,118 @@ Gère les erreurs courantes :
 - 404 Not Found → Catégorie ou jeu introuvable.
 
 - 500 Internal Server Error → Erreur inattendue.
+
+### Methode pour la classe Genre
+
+#### Récupération et Validation de l'ID du Genre
+![genre1](img/genre1.png)
+
+- Récupère l'ID du genre via la requête GET.
+
+- Vérifie si l'ID est défini et bien un nombre (is_numeric()).
+
+- Lance une exception ParameterException si l'ID est invalide.
+
+#### Recherche du Genre en Base de Données
+
+![genre2](img/genre2.png)
+
+- Cherche le genre en base de données via genre::findById().
+
+- Nettoie la description pour éviter les injections XSS (escapeString()).
+
+- Crée une page web avec le nom du genre.
+
+#### Création du Menu
+
+![genre3](img/genre3.png)
+Ajoute un menu de navigation :
+
+- Accueil.
+
+- Ajout de jeu.
+
+- Formulaire de tri des jeux par nom ou année de sortie
+
+#### Affichage des Jeux du Genre
+
+![genre4](img/genre4.png)
+- Récupère tous les jeux associés au genre avec GameCollection::findByGenreId()
+
+#### Alternance dans l'Affichage des Jeux
+
+![genre5](img/genre5.png)
+- Alterne l'affichage (gameBox et gameBox_rev) pour améliorer la mise en page.
+Affiche :
+- Image du jeu (poster.php).
+
+- Nom et année de sortie.
+
+- Description courte.
+
+
+#### Gestion des Erreurs
+
+![genre6](img/genre6.png)
+- 400 → ID de genre invalide.
+
+- 404 → Genre ou jeux non trouvés.
+
+- 500 → Erreur serveur.
+
+### Methode pour la classe poster
+
+#### Récupération et Validation de l'ID du Poster
+
+![poster1](img/poster1.png)
+
+- Récupère l'ID du poster via la requête GET.
+
+- Vérifie si l'ID est bien défini et numérique (is_numeric()).
+
+- Lance une exception ParameterException si l'ID est invalide.
+
+#### Recherche du Poster
+![poster2](img/poster2.png)
+
+- Cherche le poster en base de données avec poster::findById()
+
+#### Configuration du Type de Réponse
+![poster3](img/poster3.png)
+
+- Définit le type de réponse HTTP en image/jpeg.
+
+- Affiche l'image en récupérant son contenu avec getJpeg()
+
+
+#### Gestion des Erreurs
+![poster4](img/poster4.png)
+
+- 400 → Mauvaise requête (ID invalide).
+
+- 404 → Poster introuvable.
+
+- 500 → Erreur serveur.
+
+### Methode pour la classe index
+
+#### Création de la Page HTML
+![index1](img/index1.png)
+Crée une page HTML avec un titre "Jeux Vidéo"
+#### Ajout du Menu
+![index2](img/index2.png)
+- Affiche un menu avec un lien permettant d'ajouter un jeu.
+#### Affichage des Genres
+![index3](img/index3.png)
+- Récupère tous les genres avec genreCollection::findAll().
+- - Affiche chaque genre sous forme de lien pointant vers genre.php?genreId=<ID>.
+#### Affichage des Catégories
+![index4](img/index4.png)
+- Récupère tous les genres avec genreCollection::findAll().
+
+- Affiche chaque genre sous forme de lien pointant vers genre.php?genreId=<ID>.
+#### Affichage Final
+![index5](img/index5.png)
+- Récupère toutes les catégories via CategoryCollection::findAll().
+
+- Affiche chaque catégorie sous forme de lien pointant vers category.php?categoryId=<ID>.
