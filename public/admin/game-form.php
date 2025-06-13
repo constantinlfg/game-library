@@ -8,7 +8,7 @@ use Entity\Exception\EntityNotFoundException;
 use Entity\Exception\ParameterException;
 
 try{
-    if(isset($_GET['gameId']) && is_numeric($_GET['gameId'])){
+    if(isset($_GET['id']) && is_numeric($_GET['id'])){
         $form=new GameForm(Game::findById(intval($_GET['gameId'])));
     }else{
         $form=new GameForm();
