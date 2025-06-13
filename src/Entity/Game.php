@@ -19,7 +19,7 @@ class Game
     private ?int $mac;
     private ?int $metacritic;
     private ?int $developerId;
-    private ?int $posterId;
+    private ?int $posterId=null;
 
     public function getId(): ?int
     {
@@ -204,18 +204,90 @@ SQL);
     public function update():Game{
         $stmt = MyPDO::getInstance()->prepare(<<<'SQL'
 UPDATE game
-SET name = :name
+SET name = :name, releaseYear=:releaseYear, shortDescription=:shortDescription, 
+    price=:price, windows=:windows, linux=:linux, mac=:mac, metacritic=:metacritic,
+    developerId=:developerId, posterId=:posterId
 WHERE id = :id
 SQL);
         $id = $this->getId();
         $name = $this->getName();
-        $stmt->bindParam(':id', $id);
+        $releaseYear = $this->getReleaseYear();
+        $shortDescription = $this->getShortDescription();
+        $price = $this->getPrice();
+        $windows = $this->getWindows();
+        $linux = $this->getLinux();
+        $mac = $this->getMac();
+        $metacritic = $this->getMetacritic();
+        $developerId = $this->getDeveloperId();
+        $posterId = $this->getPosterId();
+        $stmt->bindParam(':id',$id);
         $stmt->bindParam(':name',$name);
+        $stmt->bindParam(':releaseYear',$releaseYear);
+        $stmt->bindParam(':shortDescripion',$shortDescription);
+        $stmt->bindParam(':price',$price);
+        $stmt->bindParam(':windows',$windows);
+        $stmt->bindParam(':linux',$linux);
+        $stmt->bindParam(':mac',$mac);
+        $stmt->bindParam(':metacritic',$metacritic);
+        $stmt->bindParam(':developerId',$developerId);
+        $stmt->bindParam(':posterId',$posterId);
         $stmt->execute();
         return $this;
     }
 
+    public static function create(string $name, int $releaseYear, string $shortDescription,
+                                    int $id=null, int $price=null, int $windows=0,
+                                    int $linux=0, int $mac=0, int $metacritic=null,
+                                    int $developerId=null, int $posterId=null){
+        $game= new Game();
+        $game->setName($name);
+        $game->setReleaseYear($releaseYear);
+        $game->setShortDescription($shortDescription);
+        $game->setId($id);
+        $game->setPrice($price);
+        $game->setWindows($windows);
+        $game->setLinux($linux);
+        $game->setMac($mac);
+        $game->setMetacritic($metacritic);
+        $game->setDeveloperId($developerId);
+        $game->setPosterId($posterId);
+        return $game;
+    }
 
+    private function __construct()
+    {
+    }
 
-
+    public function insert():Game{
+        $stmt=MyPdo::getInstance()->prepare(<<<'SQL'
+INSERT INTO game
+VALUES(:id, :name, :releaseYear, :shortDescription, :price, :windows, :linux, :mac, :metacritic,
+        :developerId, :posterId)
+SQL);
+        $this->setId((int)MyPdo::getInstance()->lastInsertId());
+        $id = $this->getId();
+        $name = $this->getName();
+        $releaseYear = $this->getReleaseYear();
+        $shortDescription = $this->getShortDescription();
+        $price = $this->getPrice();
+        $windows = $this->getWindows();
+        $linux = $this->getLinux();
+        $mac = $this->getMac();
+        $metacritic = $this->getMetacritic();
+        $developerId = $this->getDeveloperId();
+        $posterId = $this->getPosterId();
+        $stmt->bindParam(':id',$id);
+        $stmt->bindParam(':name',$name);
+        $stmt->bindParam(':releaseYear',$releaseYear);
+        $stmt->bindParam(':shortDescripion',$shortDescription);
+        $stmt->bindParam(':price',$price);
+        $stmt->bindParam(':windows',$windows);
+        $stmt->bindParam(':linux',$linux);
+        $stmt->bindParam(':mac',$mac);
+        $stmt->bindParam(':metacritic',$metacritic);
+        $stmt->bindParam(':developerId',$developerId);
+        $stmt->bindParam(':posterId',$posterId);
+        $stmt->execute();
+        return $this;
+    }
 }
