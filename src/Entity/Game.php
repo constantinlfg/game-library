@@ -9,7 +9,7 @@ use Entity\genre;
 
 class Game
 {
-    private int $id;
+    private ?int $id;
     private string $name;
     private int $releaseYear;
     private ?string $shortDescription;
@@ -26,9 +26,10 @@ class Game
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(?int $id): Game
     {
         $this->id = $id;
+        return $this;
     }
 
     public function getName(): string
@@ -175,4 +176,17 @@ SQL);
         $stmt->setFetchMode(MyPdo::FETCH_CLASS, Category::class);
         return $stmt->fetchAll();
     }
+
+    public function delete():Game{
+        $stmt = MyPDO::getInstance()->prepare(<<<'SQL'
+DELETE FROM game
+WHERE id = :id
+SQL);
+        $id=$this->getId();
+        $stmt->bindParam(':id',$id);
+        $stmt->execute();
+        $this->setId(null);
+        return $this;
+    }
+
 }
