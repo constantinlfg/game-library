@@ -14,9 +14,9 @@ class Game
     private int $releaseYear;
     private string $shortDescription;
     private ?int $price;
-    private ?int $windows;
-    private ?int $linux;
-    private ?int $mac;
+    private int $windows=0;
+    private int $linux=0;
+    private int $mac=0;
     private ?int $metacritic;
     private ?int $developerId;
     private ?int $posterId=null;
@@ -206,7 +206,7 @@ SQL);
 UPDATE game
 SET name = :name, releaseYear=:releaseYear, shortDescription=:shortDescription, 
     price=:price, windows=:windows, linux=:linux, mac=:mac, metacritic=:metacritic,
-    developerId=:developerId, posterId=:posterId
+    developerId=:developerId
 WHERE id = :id
 SQL);
         $id = $this->getId();
@@ -214,23 +214,25 @@ SQL);
         $releaseYear = $this->getReleaseYear();
         $shortDescription = $this->getShortDescription();
         $price = $this->getPrice();
-        $windows = $this->getWindows();
-        $linux = $this->getLinux();
-        $mac = $this->getMac();
+        $windows = (int) $this->getWindows();
+        $linux = (int) $this->getLinux();
+        $mac = (int) $this->getMac();
         $metacritic = $this->getMetacritic();
         $developerId = $this->getDeveloperId();
-        $posterId = $this->getPosterId();
+        //var_dump($windows); // debug
+        //var_dump($linux); // debug
+        //var_dump($mac); // debug
+        //exit;
         $stmt->bindParam(':id',$id);
         $stmt->bindParam(':name',$name);
         $stmt->bindParam(':releaseYear',$releaseYear);
-        $stmt->bindParam(':shortDescripion',$shortDescription);
+        $stmt->bindParam(':shortDescription',$shortDescription);
         $stmt->bindParam(':price',$price);
         $stmt->bindParam(':windows',$windows);
         $stmt->bindParam(':linux',$linux);
         $stmt->bindParam(':mac',$mac);
         $stmt->bindParam(':metacritic',$metacritic);
         $stmt->bindParam(':developerId',$developerId);
-        $stmt->bindParam(':posterId',$posterId);
         $stmt->execute();
         return $this;
     }
@@ -260,9 +262,10 @@ SQL);
 
     public function insert():Game{
         $stmt=MyPdo::getInstance()->prepare(<<<'SQL'
-INSERT INTO game
+INSERT INTO game(id, name, releaseYear, shortDescription, price, windows, linux, mac, metacritic,
+        developerId)
 VALUES(:id, :name, :releaseYear, :shortDescription, :price, :windows, :linux, :mac, :metacritic,
-        :developerId, :posterId)
+        :developerId)
 SQL);
         $this->setId((int)MyPdo::getInstance()->lastInsertId());
         $id = $this->getId();
@@ -273,20 +276,22 @@ SQL);
         $windows = $this->getWindows();
         $linux = $this->getLinux();
         $mac = $this->getMac();
+        //var_dump($windows); // debug
+        //var_dump($linux); // debug
+        //var_dump($mac); // debug
+        //exit;
         $metacritic = $this->getMetacritic();
         $developerId = $this->getDeveloperId();
-        $posterId = $this->getPosterId();
         $stmt->bindParam(':id',$id);
         $stmt->bindParam(':name',$name);
         $stmt->bindParam(':releaseYear',$releaseYear);
-        $stmt->bindParam(':shortDescripion',$shortDescription);
+        $stmt->bindParam(':shortDescription',$shortDescription);
         $stmt->bindParam(':price',$price);
         $stmt->bindParam(':windows',$windows);
         $stmt->bindParam(':linux',$linux);
         $stmt->bindParam(':mac',$mac);
         $stmt->bindParam(':metacritic',$metacritic);
         $stmt->bindParam(':developerId',$developerId);
-        $stmt->bindParam(':posterId',$posterId);
         $stmt->execute();
         return $this;
     }

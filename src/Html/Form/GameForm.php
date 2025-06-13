@@ -20,22 +20,39 @@ class GameForm
 
     public function getHtmlForm(string $url):string
     {
-        $id = $this->game->getId();
-        $name = $this->game->getName();
-        $releaseYear = $this->game->getReleaseYear();
-        $shortDescription = $this->game->getShortDescription();
-        $price = $this->game->getPrice();
-        $windows = $this->game->getWindows();
-        $linux = $this->game->getLinux();
-        $mac = $this->game->getMac();
-        $metacritic = $this->game->getMetacritic();
-        $developerId = $this->game->getDeveloperId();
+        $id = $this->game?->getId();
+        $name = $this->game?->getName();
+        $releaseYear = $this->game?->getReleaseYear();
+        $shortDescription = $this->game?->getShortDescription();
+        $price = $this->game?->getPrice();
+        $windows = $this->game?->getWindows();
+        $linux = $this->game?->getLinux();
+        $mac = $this->game?->getMac();
+        $metacritic = $this->game?->getMetacritic();
+        $developerId = $this->game?->getDeveloperId();
         $html = <<<HTML
-<form action="$url" method="post">
+<!doctype html>
+<html lang="fr">
+<head>
+<title>Modification de Jeu</title>
+<meta charset="UTF-8">
+             <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+                         <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Modification de Jeu</h1>
+    </div>
+<div class="menu">
+    <a href="admin/game-form.php">Ajouter un jeu</a>
+</div>
+<div class="formulaire">
+<form action="game-save.php" method="post">
   <div><input type="hidden" id="id" name="id" value="$id"></div>
   <div>
     <label for="name">Nom du jeu : </label>
-    <input type="text" id="name" name="name" value="{$this->stringEscaper($name)}" required>
+    <input type="text" id="name" name="name" value="{$this->stripTagsAndTrim($name)}" required>
   </div>
   <div>
     <label for="releaseYear">Année de sortie : </label>
@@ -43,7 +60,7 @@ class GameForm
   </div>
   <div>
     <label for="shortDescription">Description</label>
-    <input type="text" id="shortDescription" name="shortDescription" value="{$this->stringEscaper($shortDescription)}">
+    <input type="text" id="shortDescription" name="shortDescription" value="{$this->stripTagsAndTrim($shortDescription)}">
   </div>
   <div>
     <label for="price">Prix du jeu (en centime)</label>
@@ -115,6 +132,8 @@ HTML;
     <input type="submit" value="Enregistrer">
   </div>
 </form>
+</div>
+</body>
 HTML;
         return $html;
     }
@@ -149,7 +168,7 @@ HTML;
             $price=null;
         }
         if(isset($_POST['windows']) && is_numeric($_POST["windows"])){
-            $windows = intval($_POST['id']);
+            $windows = intval($_POST['windows']);
         } else{
             $windows = 0;
         }
@@ -161,7 +180,7 @@ HTML;
         if(isset($_POST['mac']) && is_numeric($_POST["mac"])){
             $mac = intval($_POST['mac']);
         } else{
-            $id=0;
+            $mac=0;
         }
         if(isset($_POST['metacritic']) && is_numeric($_POST["metacritic"])){
             $metacritic = intval($_POST['metacritic']);
