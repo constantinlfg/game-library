@@ -19,14 +19,10 @@
 - Création de la merge request sur Gitlab
 > ![merge](img/merge-request.jpg)
 
-### Création des classe ```Genre,Game,Poster,	CategorieCollection,genreCollection,GameCollection```
-``
- - Même procédé pour les classes mais utilisation de ```git rebase```
+### Création de la classe ```Genre```
+- Même procédé pour la classe genre mais utilisation de ```git rebase``
     > branche genre active :
     >```git checkout genre```
     >
     > rebase la branche sur main:
     >```git rebase main```
-    
-    
-## Ajout des methodes
