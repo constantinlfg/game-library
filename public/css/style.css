@@ -35,7 +35,7 @@ body{
 
 .content{
     padding-top: 80px;
-    padding-bottom: 145px;
+    padding-bottom: 550px;
     display: flex;
     flex-direction: column;
     height: fit-content;
@@ -232,6 +232,10 @@ a:hover {
     transform: scale(1.1);
     transition: all 0.3s ease-in-out;
 
+}
+.image a {
+    display: inline-block;
+    width: 100%;
 }
 
 
