@@ -290,4 +290,13 @@ SQL);
         $stmt->execute();
         return $this;
     }
+    public function save():Game{
+        if($this->getId()===null){
+            $this->insert();
+        }
+        else{
+            $this->update();
+        }
+        return $this;
+    }
 }
