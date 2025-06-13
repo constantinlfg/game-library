@@ -6,6 +6,11 @@ use Entity\Game;
 
 class GameCollection
 {
+    /**
+     * Permet de trouver tous les jeux d'une catégorie avec le tri intégré.
+     * @param int $categoryId
+     * @return array
+     */
     public static function findByCategoryId(int $categoryId): array
     {
         if(isset($_GET["tri"]) && $_GET["tri"]=='year') {
@@ -33,6 +38,7 @@ SQL);
     }
 
     /**
+     * Permet de trouver tous les jeux d'un genre avec le tri intégré.
      * @param int $genreId
      * @return Game[]
      */

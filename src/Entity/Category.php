@@ -30,6 +30,11 @@ class Category
         $this->description = $description;
     }
 
+    /**
+     * Permet de trouver une catégorie avec son id.
+     * @param int $id id de la catégorie
+     * @return Category
+     */
     public static function findById(int $id): Category
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'

@@ -31,6 +31,12 @@ class genre
     {
         $this->description = $description;
     }
+
+    /**
+     * Permet de trouver un genre avec son id.
+     * @param int $id id du genre
+     * @return genre
+     */
     public static function findById(int $id): genre
     {
         $stmt = MyPDO::getInstance()->prepare(<<<'SQL'
