@@ -29,6 +29,7 @@ class GameForm
         $linux = $this->game->getLinux();
         $mac = $this->game->getMac();
         $metacritic = $this->game->getMetacritic();
+        $developerId = $this->game->getDeveloperId();
         $html = <<<HTML
 <form action="$url" method="post">
   <div><input type="hidden" id="id" name="id" value="$id"></div>
@@ -106,11 +107,73 @@ HTML;
     <label for="metacritic">Note Metacritic</label>
     <input type="number" min="0" max="100" id="metacritic" name="metacritic" value="$metacritic">
   </div>
+  <div>
+    <label for="developerId">ID du développeur</label>
+    <input type="number" min="0" max="99999999999" name="developerId" id="developerId" value="$developerId">
+  </div>
+  <div>
+    <input type="submit" value="Enregistrer">
+  </div>
 </form>
 HTML;
         return $html;
     }
 
-
+    /**
+     * @throws ParameterException
+     */
+    public function setEntityFromQueryString():void{
+        if(isset($_POST['id']) && is_numeric($_POST["id"])){
+            $id = intval($_POST['id']);
+        } else{
+            $id=null;
+        }
+        if(!(empty($_POST['name']))){
+            $name = $this->stripTagsAndTrim($_POST['name']);
+        } else{
+            throw new ParameterException("le nom du jeu est manquant.");
+        }
+        if(isset($_POST['releaseYear']) && is_numeric($_POST["releaseYear"])){
+            $releaseYear = intval($_POST['releaseYear']);
+        } else{
+            throw new ParameterException("l'année du jeu est manquante.");
+        }
+        if(!(empty($_POST["shortDescription"]))){
+            $shortDescription = $this->stripTagsAndTrim($_POST['shortDescription']);
+        } else{
+            throw new ParameterException("la description du jeu est manquante.");
+        }
+        if(isset($_POST['price']) && is_numeric($_POST["price"])){
+            $price = intval($_POST['price']);
+        } else{
+            $price=null;
+        }
+        if(isset($_POST['windows']) && is_numeric($_POST["windows"])){
+            $windows = intval($_POST['id']);
+        } else{
+            $windows = 0;
+        }
+        if(isset($_POST['linux']) && is_numeric($_POST["linux"])){
+            $linux = intval($_POST['linux']);
+        } else{
+            $linux=0;
+        }
+        if(isset($_POST['mac']) && is_numeric($_POST["mac"])){
+            $mac = intval($_POST['mac']);
+        } else{
+            $id=0;
+        }
+        if(isset($_POST['metacritic']) && is_numeric($_POST["metacritic"])){
+            $metacritic = intval($_POST['metacritic']);
+        } else{
+            $metacritic=null;
+        }
+        if(isset($_POST['developerId']) && is_numeric($_POST["developerId"])){
+            $developerId = intval($_POST['developerId']);
+        } else{
+            $developerId=null;
+        }
+        $this->game=Game::create($name,$releaseYear,$shortDescription,$id,$price,$windows,$linux,$mac,$metacritic,$developerId);
+    }
 
 }
