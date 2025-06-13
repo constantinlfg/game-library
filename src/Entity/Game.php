@@ -189,4 +189,20 @@ SQL);
         return $this;
     }
 
+    public function update():Game{
+        $stmt = MyPDO::getInstance()->prepare(<<<'SQL'
+UPDATE game
+SET name = :name
+WHERE id = :id
+SQL);
+        $id = $this->getId();
+        $name = $this->getName();
+        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':name',$name);
+        $stmt->execute();
+        return $this;
+    }
+
+
+
 }
