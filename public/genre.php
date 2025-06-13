@@ -22,6 +22,21 @@ try {
     <div>
         <a href="admin/game-form.php">Ajouter un jeu</a>
     </div>
+    <div class="tri">
+      <form action="genre.php" method="get">
+          <input type="hidden" name="genreId" value="$genreId">
+          <legend>Trier par:</legend>
+          <div>
+            <input type="radio" id='triN' name="tri" value="name">
+            <label for="triN">Nom</label>
+          </div>
+          <div>
+            <input type="radio" id='triY' name="tri" value="year">
+            <label for="triY">Année de sortie</label>
+          </div>
+          <input type="submit" value="trier">
+      </form>
+    </div>
 </div>
 HTML);
     $html->appendContent('<div class="main">');
