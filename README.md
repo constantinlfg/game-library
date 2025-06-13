@@ -97,3 +97,73 @@ Gère les erreurs courantes :
 
 #### Récupération et Validation de l'ID du Jeu
 
+![game1](img/game1.png)
+- Récupère l'ID du jeu envoyé via la requête GET.
+
+- Convertit l'ID en entier avec intval().
+
+- Valide si l'ID est bien défini et numérique.
+
+- Lance une exception ParameterException si l'ID est invalide
+
+![game2](img/game2.png)
+
+- Cherche le jeu correspondant avec Game::findById().
+
+- Évite les failles XSS en nettoyant le nom avec escapeString().
+
+- Crée une page web personnalisée avec le nom du jeu.
+
+![game3](img/game3.png)
+
+Affiche trois options :
+
+- Retour à l'accueil.
+
+- Modifier le jeu via game-form.php.
+
+- Supprimer le jeu via game-delete.php.
+
+![game4](img/game4.png)
+
+- Cherche le développeur associé au jeu.
+
+- Convertit le prix (stocké en centimes) en euros.
+
+![game5](img/game5.png)
+
+- Vérifie si le jeu est compatible avec Windows, Linux ou Mac.
+
+- Affiche des icônes correspondantes
+
+![game6](img/game6.png)
+
+Affiche:
+
+- Affiche du jeu (poster.php).
+
+- Année de publication.
+
+- Développeur.
+
+- Systèmes compatibles.
+
+![game7](img/game7.png)
+
+- Affiche la note Metacritic.
+
+- Affiche le prix du jeu.
+
+![game8](img/game8.png)
+
+- Ajoute les liens vers les genres et catégories du jeu
+
+![game9](img/game9.png)
+
+Gère les erreurs courantes :
+
+- 400 Bad Request → ID invalide.
+
+- 404 Not Found → Catégorie ou jeu introuvable.
+
+- 500 Internal Server Error → Erreur inattendue.
