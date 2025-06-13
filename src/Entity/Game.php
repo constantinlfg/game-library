@@ -9,26 +9,27 @@ use Entity\genre;
 
 class Game
 {
-    private int $id;
+    private ?int $id;
     private string $name;
     private int $releaseYear;
-    private ?string $shortDescription;
+    private string $shortDescription;
     private ?int $price;
-    private ?int $windows;
-    private ?int $linux;
-    private ?int $mac;
+    private int $windows=0;
+    private int $linux=0;
+    private int $mac=0;
     private ?int $metacritic;
     private ?int $developerId;
-    private ?int $posterId;
+    private ?int $posterId=null;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function setId(int $id): void
+    public function setId(?int $id): Game
     {
         $this->id = $id;
+        return $this;
     }
 
     public function getName(): string
@@ -36,9 +37,10 @@ class Game
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name): Game
     {
         $this->name = $name;
+        return $this;
     }
 
     public function getReleaseYear(): int
@@ -46,9 +48,10 @@ class Game
         return $this->releaseYear;
     }
 
-    public function setReleaseYear(int $releaseYear): void
+    public function setReleaseYear(int $releaseYear): Game
     {
         $this->releaseYear = $releaseYear;
+        return $this;
     }
 
     public function getShortDescription(): string
@@ -56,49 +59,54 @@ class Game
         return $this->shortDescription;
     }
 
-    public function setShortDescription(string $shortDescription): void
+    public function setShortDescription(string $shortDescription): Game
     {
         $this->shortDescription = $shortDescription;
+        return $this;
     }
 
-    public function getPrice(): int
+    public function getPrice(): ?int
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): void
+    public function setPrice(?int $price): Game
     {
         $this->price = $price;
+        return $this;
     }
 
-    public function getWindows(): int
+    public function getWindows(): ?int
     {
         return $this->windows;
     }
 
-    public function setWindows(int $windows): void
+    public function setWindows(?int $windows): Game
     {
         $this->windows = $windows;
+        return $this;
     }
 
-    public function getLinux(): int
+    public function getLinux(): ?int
     {
         return $this->linux;
     }
 
-    public function setLinux(int $linux): void
+    public function setLinux(?int $linux): Game
     {
         $this->linux = $linux;
+        return $this;
     }
 
-    public function getMac(): int
+    public function getMac(): ?int
     {
         return $this->mac;
     }
 
-    public function setMac(int $mac): void
+    public function setMac(?int $mac): Game
     {
         $this->mac = $mac;
+        return $this;
     }
 
     public function getMetacritic(): ?int
@@ -106,30 +114,35 @@ class Game
         return $this->metacritic;
     }
 
-    public function setMetacritic(int $metacritic): void
+    public function setMetacritic(?int $metacritic): Game
     {
         $this->metacritic = $metacritic;
+        return $this;
     }
 
-    public function getDeveloperId(): int
+    public function getDeveloperId(): ?int
     {
         return $this->developerId;
     }
 
-    public function setDeveloperId(int $developerId): void
+    public function setDeveloperId(?int $developerId): Game
     {
         $this->developerId = $developerId;
+        return $this;
     }
 
-    public function getPosterId(): int
+    public function getPosterId(): ?int
     {
         return $this->posterId;
     }
 
-    public function setPosterId(int $posterId): void
+    public function setPosterId(?int $posterId): Game
     {
         $this->posterId = $posterId;
+        return $this;
     }
+
+
 
     public static function findById(int $id):Game{
         $stmt=MyPdo::getInstance()->prepare(<<<'SQL'
@@ -174,5 +187,121 @@ SQL);
         $stmt->execute();
         $stmt->setFetchMode(MyPdo::FETCH_CLASS, Category::class);
         return $stmt->fetchAll();
+    }
+
+    public function delete():Game{
+        $stmt = MyPDO::getInstance()->prepare(<<<'SQL'
+DELETE FROM game
+WHERE id = :id
+SQL);
+        $id=$this->getId();
+        $stmt->bindParam(':id',$id);
+        $stmt->execute();
+        $this->setId(null);
+        return $this;
+    }
+
+    public function update():Game{
+        $stmt = MyPDO::getInstance()->prepare(<<<'SQL'
+UPDATE game
+SET name = :name, releaseYear=:releaseYear, shortDescription=:shortDescription, 
+    price=:price, windows=:windows, linux=:linux, mac=:mac, metacritic=:metacritic,
+    developerId=:developerId
+WHERE id = :id
+SQL);
+        $id = $this->getId();
+        $name = $this->getName();
+        $releaseYear = $this->getReleaseYear();
+        $shortDescription = $this->getShortDescription();
+        $price = $this->getPrice();
+        $windows = (int) $this->getWindows();
+        $linux = (int) $this->getLinux();
+        $mac = (int) $this->getMac();
+        $metacritic = $this->getMetacritic();
+        $developerId = $this->getDeveloperId();
+        //var_dump($windows); // debug
+        //var_dump($linux); // debug
+        //var_dump($mac); // debug
+        //exit;
+        $stmt->bindParam(':id',$id);
+        $stmt->bindParam(':name',$name);
+        $stmt->bindParam(':releaseYear',$releaseYear);
+        $stmt->bindParam(':shortDescription',$shortDescription);
+        $stmt->bindParam(':price',$price);
+        $stmt->bindParam(':windows',$windows);
+        $stmt->bindParam(':linux',$linux);
+        $stmt->bindParam(':mac',$mac);
+        $stmt->bindParam(':metacritic',$metacritic);
+        $stmt->bindParam(':developerId',$developerId);
+        $stmt->execute();
+        return $this;
+    }
+
+    public static function create(string $name, int $releaseYear, string $shortDescription,
+                                    int $id=null, int $price=null, int $windows=0,
+                                    int $linux=0, int $mac=0, int $metacritic=null,
+                                    int $developerId=null, int $posterId=null){
+        $game= new Game();
+        $game->setName($name);
+        $game->setReleaseYear($releaseYear);
+        $game->setShortDescription($shortDescription);
+        $game->setId($id);
+        $game->setPrice($price);
+        $game->setWindows($windows);
+        $game->setLinux($linux);
+        $game->setMac($mac);
+        $game->setMetacritic($metacritic);
+        $game->setDeveloperId($developerId);
+        $game->setPosterId($posterId);
+        return $game;
+    }
+
+    private function __construct()
+    {
+    }
+
+    public function insert():Game{
+        $stmt=MyPdo::getInstance()->prepare(<<<'SQL'
+INSERT INTO game(id, name, releaseYear, shortDescription, price, windows, linux, mac, metacritic,
+        developerId)
+VALUES(:id, :name, :releaseYear, :shortDescription, :price, :windows, :linux, :mac, :metacritic,
+        :developerId)
+SQL);
+        $this->setId((int)MyPdo::getInstance()->lastInsertId());
+        $id = $this->getId();
+        $name = $this->getName();
+        $releaseYear = $this->getReleaseYear();
+        $shortDescription = $this->getShortDescription();
+        $price = $this->getPrice();
+        $windows = $this->getWindows();
+        $linux = $this->getLinux();
+        $mac = $this->getMac();
+        //var_dump($windows); // debug
+        //var_dump($linux); // debug
+        //var_dump($mac); // debug
+        //exit;
+        $metacritic = $this->getMetacritic();
+        $developerId = $this->getDeveloperId();
+        $stmt->bindParam(':id',$id);
+        $stmt->bindParam(':name',$name);
+        $stmt->bindParam(':releaseYear',$releaseYear);
+        $stmt->bindParam(':shortDescription',$shortDescription);
+        $stmt->bindParam(':price',$price);
+        $stmt->bindParam(':windows',$windows);
+        $stmt->bindParam(':linux',$linux);
+        $stmt->bindParam(':mac',$mac);
+        $stmt->bindParam(':metacritic',$metacritic);
+        $stmt->bindParam(':developerId',$developerId);
+        $stmt->execute();
+        return $this;
+    }
+    public function save():Game{
+        if($this->getId()===null){
+            $this->insert();
+        }
+        else{
+            $this->update();
+        }
+        return $this;
     }
 }

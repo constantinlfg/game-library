@@ -1,0 +1,21 @@
+<?php
+
+use Entity\Game;
+use Html\Form\GameForm;
+use Entity\Exception\EntityNotFoundException;
+use Entity\Exception\ParameterException;
+use Database\MyPdo;
+
+$name = $_POST["name"];
+$releaseYear = intval($_POST["releaseYear"]);
+$shortDescription = $_POST["shortDescription"];
+try{
+    $form = new GameForm();
+    $form->setEntityFromQueryString();
+    $form->getGame()->save();
+    header("Location: /index.php");
+    exit();
+
+} catch (ParameterException) {
+http_response_code(400);
+}

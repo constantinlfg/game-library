@@ -8,6 +8,7 @@ use Entity\genre;
 use Entity\developer;
 
 $gameId = $_GET['gameId'];
+$id = intval($gameId);
 try {
     if (!(isset($gameId)) && !(is_numeric($gameId))) {
         throw new ParameterException('id du jeu invalide');
@@ -15,6 +16,19 @@ try {
     $game = Game::findById(intval($gameId));
     $nom = (new AppWebPage())->escapeString($game->getName());
     $html = new AppWebPage("Jeux Vidéo : $nom");
+    $html->appendContent(<<<HTML
+<div class="menu">
+    <div>
+        <a href="index.php">Accueil</a>
+    </div>
+    <div>
+        <a href="admin/game-form.php?id=$id">Modifer le jeu</a>
+    </div>
+    <div>
+      <a href="admin/game-delete.php?id=$id">Supprimer le jeu</a>
+    </div>
+</div>
+HTML);
     $html->appendContent('<div class="main">');
     $developer = developer::findById($game->getDeveloperId());
     $price = $game->getPrice();
