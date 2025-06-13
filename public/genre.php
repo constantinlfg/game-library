@@ -14,6 +14,16 @@ try {
     $genre = genre::findById($genreId);
     $nom = (new AppWebPage())->escapeString($genre->getDescription());
     $html = new AppWebPage("Jeux Vidéo : $nom");
+    $html->appendContent(<<<HTML
+<div class="menu">
+    <div>
+        <a href="index.php">Accueil</a>
+    </div>
+    <div>
+        <a href="admin/game-form.php">Ajouter un jeu</a>
+    </div>
+</div>
+HTML);
     $html->appendContent('<div class="main">');
     $jeux = GameCollection::findByGenreId(intval($genreId));
 
