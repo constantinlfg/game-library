@@ -21,6 +21,12 @@ class poster
     {
         return $this->id;
     }
+
+    /**
+     * Permet de trouver un poster selon son id.
+     * @param int $id id du poster
+     * @return poster
+     */
     public static function findById(int $id): poster
     {
         $stmt = MyPDO::getInstance()->prepare(<<<'SQL'

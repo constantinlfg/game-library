@@ -28,6 +28,12 @@ class developer
     {
         $this->name = $name;
     }
+
+    /**
+     * Permet de trouver un developpeur avec son id.
+     * @param int $id id du dev
+     * @return developer
+     */
     public static function findById(int $id): developer
     {
         $stmt = MyPDO::getInstance()->prepare(<<<'SQL'

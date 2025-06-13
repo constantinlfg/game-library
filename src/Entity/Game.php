@@ -143,7 +143,11 @@ class Game
     }
 
 
-
+    /**
+     * Permet de trouver un jeu à partir de son id.
+     * @param int $id id du jeu
+     * @return Game
+     */
     public static function findById(int $id):Game{
         $stmt=MyPdo::getInstance()->prepare(<<<'SQL'
 SELECT *
@@ -159,6 +163,10 @@ SQL);
         return $game;
     }
 
+    /**
+     * Permet de trouver les genres d'un jeu.
+     * @return genre[]
+     */
     public function findGenres(): array
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
@@ -174,6 +182,10 @@ SQL);
         return $stmt->fetchAll();
     }
 
+    /**
+     * Permet de trouver les catégories d'un jeu.
+     * @return Category[]
+     */
     public function findCategory(): array
     {
         $stmt = MyPdo::getInstance()->prepare(<<<'SQL'
@@ -189,6 +201,10 @@ SQL);
         return $stmt->fetchAll();
     }
 
+    /**
+     * Permet de suprimer un jeu dans la bd et rend l'id de l'instance null.
+     * @return $this
+     */
     public function delete():Game{
         $stmt = MyPDO::getInstance()->prepare(<<<'SQL'
 DELETE FROM game
@@ -201,6 +217,10 @@ SQL);
         return $this;
     }
 
+    /**
+     * Permet de modifier un jeu dans la bd.
+     * @return $this
+     */
     public function update():Game{
         $stmt = MyPDO::getInstance()->prepare(<<<'SQL'
 UPDATE game
@@ -237,6 +257,21 @@ SQL);
         return $this;
     }
 
+    /**
+     * Permet de créer une instance Game.
+     * @param string $name
+     * @param int $releaseYear
+     * @param string $shortDescription
+     * @param int|null $id
+     * @param int|null $price
+     * @param int $windows
+     * @param int $linux
+     * @param int $mac
+     * @param int|null $metacritic
+     * @param int|null $developerId
+     * @param int|null $posterId
+     * @return Game
+     */
     public static function create(string $name, int $releaseYear, string $shortDescription,
                                     int $id=null, int $price=null, int $windows=0,
                                     int $linux=0, int $mac=0, int $metacritic=null,
@@ -256,10 +291,17 @@ SQL);
         return $game;
     }
 
+    /**
+     * Rend le contructeur privé.
+     */
     private function __construct()
     {
     }
 
+    /**
+     * Permet d'insérer un jeu dans la bd.
+     * @return $this
+     */
     public function insert():Game{
         $stmt=MyPdo::getInstance()->prepare(<<<'SQL'
 INSERT INTO game(id, name, releaseYear, shortDescription, price, windows, linux, mac, metacritic,
@@ -295,6 +337,11 @@ SQL);
         $stmt->execute();
         return $this;
     }
+
+    /**
+     * Insère ou Modifie un jeu selon si son id est null ou non null.
+     * @return $this
+     */
     public function save():Game{
         if($this->getId()===null){
             $this->insert();

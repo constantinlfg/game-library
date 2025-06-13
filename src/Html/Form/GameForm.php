@@ -18,6 +18,12 @@ class GameForm
         return $this->game;
     }
 
+    /**
+     * Créer un formulaire de modification/création de jeu vidéo.
+     * Le formulaire envoie ses données à l'aide de la méthode POST.
+     * @param string $url
+     * @return string
+     */
     public function getHtmlForm(string $url):string
     {
         $id = $this->game?->getId();
@@ -139,6 +145,7 @@ HTML;
     }
 
     /**
+     * Permet de créer une intance de Game à partir de la requête POST.
      * @throws ParameterException
      */
     public function setEntityFromQueryString():void{
