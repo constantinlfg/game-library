@@ -30,3 +30,70 @@
     
     
 ## Ajout des methodes
+
+### Methode pour la classe catégorie
+
+#### Récupération de l'ID de catégorie
+
+![category2](img/CATEGORIE2.png)
+
+- Récupère l'ID de la catégorie via la requête GET.
+
+- Vérifie si l'ID existe et est bien un nombre.
+
+- Lance une exception si l'ID est invalide (ParameterException).
+
+
+#### Récupération de la catégorie
+
+![category3](img/CATEGORIE3.png)
+
+- Utilise Category::findById($categoryId) pour chercher la catégorie en base de données.
+
+- Nettoie la description avec escapeString() pour éviter les injections XSS.
+
+- Initialise une page web avec new AppWebPage("Jeux Vidéo : $nom").
+
+
+
+#### Création du menu
+
+![category4](img/CATEGORIE4.png)
+
+Ajoute un menu contenant :
+
+- Un lien vers l'accueil.
+
+- Un lien pour ajouter un jeu.
+
+- Un formulaire de tri permettant de classer les jeux par nom ou année de sortie.
+
+
+#### Affichage des jeux
+
+![category5](img/CATEGORIE5.png)
+
+- Récupère la liste des jeux via GameCollection::findByCategoryId().
+
+- Alterne l'affichage (gameBox et gameBox_rev) pour un effet visuel dynamique.
+
+- Ajoute chaque jeu avec son nom, année de sortie et description courte.
+
+
+#### Gestion des erreurs
+
+![category6](img/CATEGORIE6.png)
+
+Gère les erreurs courantes :
+
+- 400 Bad Request → ID invalide.
+
+- 404 Not Found → Catégorie ou jeu introuvable.
+
+- 500 Internal Server Error → Erreur inattendue.
+
+
+### Methode pour la classe game
+
+#### Récupération et Validation de l'ID du Jeu
+
