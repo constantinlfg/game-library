@@ -52,7 +52,6 @@ body{
     display: flex;
     flex-direction: column;
     height: fit-content;
-    flex :1 0 auto;
     background: linear-gradient(135deg,#007198, #003C57);
 }
 
