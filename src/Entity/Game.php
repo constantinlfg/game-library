@@ -12,7 +12,7 @@ class Game
     private ?int $id;
     private string $name;
     private int $releaseYear;
-    private ?string $shortDescription;
+    private string $shortDescription;
     private ?int $price;
     private ?int $windows;
     private ?int $linux;
@@ -21,7 +21,7 @@ class Game
     private ?int $developerId;
     private ?int $posterId;
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -37,9 +37,10 @@ class Game
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name): Game
     {
         $this->name = $name;
+        return $this;
     }
 
     public function getReleaseYear(): int
@@ -47,9 +48,10 @@ class Game
         return $this->releaseYear;
     }
 
-    public function setReleaseYear(int $releaseYear): void
+    public function setReleaseYear(int $releaseYear): Game
     {
         $this->releaseYear = $releaseYear;
+        return $this;
     }
 
     public function getShortDescription(): string
@@ -57,49 +59,54 @@ class Game
         return $this->shortDescription;
     }
 
-    public function setShortDescription(string $shortDescription): void
+    public function setShortDescription(string $shortDescription): Game
     {
         $this->shortDescription = $shortDescription;
+        return $this;
     }
 
-    public function getPrice(): int
+    public function getPrice(): ?int
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): void
+    public function setPrice(?int $price): Game
     {
         $this->price = $price;
+        return $this;
     }
 
-    public function getWindows(): int
+    public function getWindows(): ?int
     {
         return $this->windows;
     }
 
-    public function setWindows(int $windows): void
+    public function setWindows(?int $windows): Game
     {
         $this->windows = $windows;
+        return $this;
     }
 
-    public function getLinux(): int
+    public function getLinux(): ?int
     {
         return $this->linux;
     }
 
-    public function setLinux(int $linux): void
+    public function setLinux(?int $linux): Game
     {
         $this->linux = $linux;
+        return $this;
     }
 
-    public function getMac(): int
+    public function getMac(): ?int
     {
         return $this->mac;
     }
 
-    public function setMac(int $mac): void
+    public function setMac(?int $mac): Game
     {
         $this->mac = $mac;
+        return $this;
     }
 
     public function getMetacritic(): ?int
@@ -107,30 +114,35 @@ class Game
         return $this->metacritic;
     }
 
-    public function setMetacritic(int $metacritic): void
+    public function setMetacritic(?int $metacritic): Game
     {
         $this->metacritic = $metacritic;
+        return $this;
     }
 
-    public function getDeveloperId(): int
+    public function getDeveloperId(): ?int
     {
         return $this->developerId;
     }
 
-    public function setDeveloperId(int $developerId): void
+    public function setDeveloperId(?int $developerId): Game
     {
         $this->developerId = $developerId;
+        return $this;
     }
 
-    public function getPosterId(): int
+    public function getPosterId(): ?int
     {
         return $this->posterId;
     }
 
-    public function setPosterId(int $posterId): void
+    public function setPosterId(?int $posterId): Game
     {
         $this->posterId = $posterId;
+        return $this;
     }
+
+
 
     public static function findById(int $id):Game{
         $stmt=MyPdo::getInstance()->prepare(<<<'SQL'
@@ -202,6 +214,7 @@ SQL);
         $stmt->execute();
         return $this;
     }
+
 
 
 
