@@ -15,7 +15,7 @@ try{
 
     $game = Game::findById($id);
     $game->delete();
-    header("Location: index.php");
+    header("Location: /index.php");
     exit();
 } catch (ParameterException) {
 http_response_code(400);
