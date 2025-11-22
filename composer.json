@@ -22,9 +22,13 @@
     },
     "scripts": {
         "start:linux": [
-            "bin/run-server.sh"],
+            "bin/run-server.sh"
+        ],
         "start":[
             "@start:linux"
+        ],
+        "start:windows": [
+          "bin/run-server.bat"
         ]
     } 
 
